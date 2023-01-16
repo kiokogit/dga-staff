@@ -35,18 +35,18 @@ const IngestionHome = () => {
             <Paper className="dash_welcome">
             </Paper>
             <div className="dash_cards_box">
-                <Card className="dash_cards"  onClick={e=> navigate('packages/all')}>
+                {/* <Card className="dash_cards"  onClick={e=> navigate('packages/all')}>
                     View All Packages
-                </Card>
+                </Card> */}
                 <Card className="dash_cards"  onClick={e=> navigate('packages/new')}>
                     Add New Package
                 </Card>
-                <Card className="dash_cards"  onClick={e=> navigate('packages/delete')}>
+                {/* <Card className="dash_cards"  onClick={e=> navigate('packages/delete')}>
                     Remove Packages
                 </Card>
                 <Card className="dash_cards" onClick={e=> navigate('packages/edit')}>
                     Edit Packages
-                </Card>
+                </Card> */}
             </div>
         </div>
     )
@@ -158,7 +158,7 @@ export const NewPackAdd = () => {
                             }}>x</Button></div>
                     </div>
                     )}
-                <div className="pack_image_list2">
+                <Paper className="pack_image_list2">
                         <FormControl fullWidth>
                             <InputLabel id="sel_label" variant="standard">Price Description</InputLabel>
                                 <Select
@@ -189,7 +189,7 @@ export const NewPackAdd = () => {
                     }}
                     
                     >Add</Button>
-                </div>
+                </Paper>
                 <div className="textfield">
                     <TextField variant="outlined" size="small" multiline={true} rows={4} label="Price includes" value={newpack.package.requirements} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, requirements:e.target.value}})} />
                 </div>
@@ -231,7 +231,7 @@ export const NewPackAdd = () => {
                         <CloseBtn value={i.image} onclose={e=>removeImage(i)}/>
                     </div>
                 ))}
-                <div className="pack_image_list2">
+                <Paper className="pack_image_list2 paper">
                     <TextField variant="outlined" size="small" label="Image Description" value={addImg.name} fullWidth onChange={e=>setAddImg({...addImg, name:e.target.value})} />
                     <div className={"fileInput textfield"}>
                         <FileBase
@@ -242,14 +242,14 @@ export const NewPackAdd = () => {
                             onDone={({base64})=>setAddImg({...addImg, image:base64})}
                         />
                     </div>
-                    <Button variant="outlined" color="success" size="small" value={"Add Image"} className={'submit_btn'} onClick={e=>{
+                    <Button variant="outlined" color="success" size="small" value={"Add Image"} onClick={e=>{
                         e.preventDefault()
                         if(addImg.image!=="" || addImg.name!==""){
                             setNewpack({...newpack, images:[...newpack.images, addImg]})
                             setAddImg({name:"", image:""})
                         }
                     }}> Add </Button>
-                </div>
+                </Paper>
                
             </form>
         </Paper>

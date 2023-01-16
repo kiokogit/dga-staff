@@ -2,6 +2,12 @@
     width: 200px;
 }
 
+.flexrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 @media (max-width:850px) {
     .dash_headers{
         display: none;
@@ -10,7 +16,6 @@
 }
 
 .side_nav_staff {
-    background-color: #074010;
     width:100%;
     height:max-content;
     padding-bottom: 100px;
@@ -64,26 +69,17 @@
     top:0px;
     left:0px;
     width:100%;
-    height:max-content;
-    background-color:rgb(255, 255, 255);
-    
+    height:max-content;    
     /* border-radius: 0px 0px 10px 0px; */
     padding-bottom: 0.5cm;
 }
 
 .nav_link {
-    height: 2rem;
-    padding: 10px;
-    /* border-top: 0.5px solid grey; */
-    /* box-shadow: 5px 3px 5px 3px rgb(206, 206, 206); */
-    border-radius: 5px;
     margin-bottom: 6px;
-    background-color:rgb(255, 255, 255);
 }
 
 .nav_link:hover{
     background-color: #074010a0;
-    /* border-right: 0.5px solid rgb(157, 131, 81); */
 }
 
 .current_nav_ {

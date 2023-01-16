@@ -5,6 +5,10 @@
     flex-direction: row;
 }
 
+.margin_around{
+    margin: 7px;
+}
+
 .dash_body{
     width: 100%;
 }
@@ -70,3 +74,15 @@
     margin-bottom: 1cm;
 }
 
+
+.pack_image_list2{
+    padding:15px;
+}
+
+.pack_image_list{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px;
+}
