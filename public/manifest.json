@@ -1,0 +1,25 @@
+{
+  "short_name": "DGA Tours",
+  "name": "DGA Tours and Travel",
+  "icons": [
+    {
+      "src": "mainlogo2.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "dga_logo_big.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "mainlogo2.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./public/home",
+  "display": "browser",
+  "theme_color": "rgb(157, 131, 81)",
+  "background_color": "rgb(157, 131, 81)"
+}

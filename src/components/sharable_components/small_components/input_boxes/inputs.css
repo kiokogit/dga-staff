@@ -1,0 +1,107 @@
+
+
+.input {
+    padding:4px;
+    height:1.5rem;
+    min-width: 95%;
+    max-width: 98%;
+    font-size: 0.9rem;
+    border: 1px solid  rgb(157, 131, 81);
+
+}
+.input_radio {
+    scale: 1.5;
+}
+input[type='radio'] {
+    accent-color: rgb(157, 131, 81);
+}
+input[type='checkbox'] {
+    accent-color: rgb(157, 131, 81);
+}
+
+.margin_around {
+    margin-right:1rem;
+}
+
+.input[type='text'] {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+.input[type='password'] {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+.input[type='email'] {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+.input[type='number'] {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    max-width: 2rem;
+}
+.input[type='date'] {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    border: 1px solid  rgb(157, 131, 81);
+}
+
+.display_inline {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content:left;
+    text-align: left;    
+}
+
+.small_input {
+    padding:4px;
+    height:1.5rem;
+    min-width: 2rem;
+    max-width: 90%;
+    font-size: 0.9rem;
+}
+.small_input_number{
+    padding:4px;
+    height:1.5rem;
+    min-width: 6cm;
+    font-size: 0.9rem;
+    max-width:100%;
+}
+
+.small_input_date{
+    padding:4px;
+    height:1.5rem;
+    min-width: 6cm;
+    font-size: 0.9rem;
+    max-width:8cm
+}
+.small_input_text{
+    padding:4px;
+    height:1.5rem;
+    min-width: 300px;
+    font-size: 0.9rem;
+    max-width:100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.text_area {
+    margin-top: 0.5rem;
+    max-width: 100%;
+    min-width: 300px;
+    height:6rem;
+    resize:none;
+    font-family: inherit;
+    border-radius: 4px;
+    border: 1px solid  rgb(157, 131, 81);
+}
+
+.text_area_container{
+    margin-top:1rem
+}
