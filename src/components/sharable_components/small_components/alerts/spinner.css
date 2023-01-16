@@ -1,0 +1,46 @@
+.spin_all{
+  max-width:300px;
+  min-width: 200px;
+  min-height: 1.5rem;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* padding-left: 50px; */
+  /* padding-right: 100px; */
+  max-height: max-content;
+  font-weight: bold;
+  text-align: center;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  border-radius: 5px;
+  color: black;
+  background-color: whitesmoke;
+}
+
+.spinner-container {
+  align-self: center;
+}
+
+@keyframes spinner {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgb(157, 131, 81, 5%); /* Light grey */
+    border-top: 2px solid rgb(157, 131, 81); /* Blue */
+    border-left: 2px solid rgb(157, 131, 81); /* Blue */
+    border-right: 2px solid rgb(157, 131, 81); /* Blue */
+    border-radius: 50%;
+    animation: spinner 0.5s linear infinite;
+  }
+  
+  

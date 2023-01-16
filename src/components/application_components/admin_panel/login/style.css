@@ -1,0 +1,60 @@
+.staff_side {
+  background-color: rgba(122, 155, 122, 0.707);
+}
+
+.center_div {
+    display: grid;
+    justify-items: center;
+    margin-top: 10%;
+    text-align: center;
+}
+.login_card {
+    width: 300px;
+    padding: 20px;
+}
+
+.login_components {
+    /* scale: 0.8; */
+    display: flex;
+    flex-direction: column;
+}
+
+.root{
+      margin: 5px,
+    }
+
+.textfield {
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+
+.paper {
+    padding: 10px;
+  }
+  .form_ {
+    display: 'flex';
+    flex-wrap: 'wrap';
+    justify-content: 'center';
+  }
+
+  .fileInput {
+    width: '97%';
+    margin: '10px 0';
+  }
+
+  .buttonSubmit {
+    margin-bottom: 10;
+  }
+
+  .company_name {
+    color: rgba(128, 128, 128, 0.6);
+  }
+
+.align_right {
+  width: 100%;
+  text-align: right;
+  align-self: right;
+  justify-content: right;
+  align-content: right;
+}
+
