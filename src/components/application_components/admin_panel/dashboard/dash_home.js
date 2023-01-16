@@ -50,14 +50,14 @@ const DashHome = () => {
                             <Card className="dash_cards"  onClick={e=> navigate('ingestion/packages/new')}>
                                 Add new Package
                             </Card>
-                            <Card className="dash_cards"  onClick={e=> navigate('ingestion/packages/edit')}>
+                            {/* <Card className="dash_cards"  onClick={e=> navigate('ingestion/packages/edit')}>
                                 Show all Packages
                             </Card>
                             <Card className="dash_cards"  onClick={e=> navigate('ingestion/packages/delete')}>
                                 Remove Package
-                            </Card>
+                            </Card> */}
                         </Paper>
-                        <Paper className="paper margin_around">
+                        {/* <Paper className="paper margin_around">
                             <div className="flexrow">
                                 <Typography variant="h6" className="typography">
                                     Staff
@@ -72,8 +72,8 @@ const DashHome = () => {
                             <Card className="dash_cards"  onClick={e=> navigate('staff/all')}>
                                 View all Staff Members
                             </Card>
-                        </Paper>
-                        <Paper className="paper margin_around">
+                        </Paper> */}
+                        {/* <Paper className="paper margin_around">
                             <div className="flexrow">
                                 <Typography variant="h6" className="typography">
                                     Analytics
@@ -91,13 +91,13 @@ const DashHome = () => {
                             <Card className="dash_cards"  onClick={e=> navigate('analytics/emails')}>
                                 Emails Sent
                             </Card>
-                        </Paper>
-                        <Card className="dash_cards"  onClick={e=> navigate('account/settings')}>
+                        </Paper> */}
+                        {/* <Card className="dash_cards"  onClick={e=> navigate('account/settings')}>
                             Account Settings
                         </Card>
                         <Card className="dash_cards" onClick={e=> navigate('account/profile')}>
                             My Profile
-                        </Card>
+                        </Card> */}
                     </div>
         </div>
     )
