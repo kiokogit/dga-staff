@@ -29,6 +29,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "https://dga-staff.netlify.app/staff/login",
   "eslintConfig": {
     "extends": [
       "react-app",
