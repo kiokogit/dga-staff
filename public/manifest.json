@@ -18,7 +18,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "",
+  "start_url": "./",
   "display": "browser",
   "theme_color": "rgb(157, 131, 81)",
   "background_color": "rgb(157, 131, 81)"

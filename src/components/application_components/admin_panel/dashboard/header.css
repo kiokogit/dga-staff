@@ -99,6 +99,14 @@
     
 }
 
+.side_bar_button{
+    margin-top: 9px;
+    height: 1.5rem;
+    width: 3rem;
+    cursor: pointer;
+}
+
+
 .side_bar_button img {
     width: 100%;
     height: 100%;
