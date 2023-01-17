@@ -3,7 +3,7 @@ import { Button, Paper } from '@mui/material'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout_staff_user } from '../../../../actions/admin/account_actions'
-import { COMPANY_NAME } from '../../../../settings/constants'
+import { COMPANY_NAME, PUBLIC_PORTAL } from '../../../../settings/constants'
 import './header.css'
 import { SideNav } from './side_nav'
 
@@ -80,8 +80,11 @@ export const TopHeader = () => {
                     <small>{user.first_name} {user.last_name}</small>
                     {showMore && 
                     <Paper className="paper dropdown_ dropdown_c" id='more_card'>
-                        <div className='' onClick={e=>log_out(e)}>
-                            <Button>Log Out</Button>
+                        <div className='seperated'>
+                            <Button onClick={e=>log_out(e)}  size="small" color='error' variant='outlined' fullWidth>Log Out</Button>
+                            </div>
+                            <div className="seperated">
+                                <Button variant="outlined" size="small" color="warning" href={PUBLIC_PORTAL} target={"_blank"} fullWidth>Public Portal</Button>
                             </div>
                     </Paper>
                         }

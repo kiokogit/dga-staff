@@ -4,6 +4,7 @@ import logo from './dga_logo.png'
 // site
 export const HOST_SERVER = API_ENDPOINT
 export const API_VERSION = ''
+export const PUBLIC_PORTAL = 'https://dgatours.netlify.app'
 
 
 // company
