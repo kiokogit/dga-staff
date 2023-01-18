@@ -14,7 +14,7 @@ export const SideNav = () => {
                     <Button variant="contained" size="large" color="success" href="/staff/dashboard" fullWidth>Dashboard</Button>
                 </div>
                 <div className="nav_link">
-                    <Button variant="contained" size="large" color="success" href="/staff/dashboard/ingestion" target={"_blank"} fullWidth>Ingestion</Button>
+                    <Button variant="contained" size="large" color="success" href="/staff/dashboard/ingestion" fullWidth>Ingestion</Button>
                 </div>
                 {/* <div className="nav_link">
                     <Button variant="contained" color="success" href="/staff/dashboard/account" fullWidth>Account</Button>
