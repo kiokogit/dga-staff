@@ -1,19 +1,5 @@
 // program to generate random strings
 
-// declare all characters
-const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-export function generateString(length) {
-    let result = 'PCKG23/';
-    const charactersLength = characters.length;
-    for ( let i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-
-    return result;
-}
-
-
 export const new_package_payload = {
     "package": {
         "title": "",
