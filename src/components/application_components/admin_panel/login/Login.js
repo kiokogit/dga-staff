@@ -52,19 +52,7 @@ export const Loginform = ({user_is_logged_in}) => {
                         <div className="textfield">
                             <TextField required name="password" type={"password"} variant="outlined" label="Password" size="small" fullWidth  value={credentials.password}  onChange={(e)=> setCredentials({...credentials,password : e.target.value})}/>
                         </div>
-                        {/* <div className={"fileInput textfield"}>
-                            <FileBase
-                            type="file"
-                            className={"fileInput"}
-                            multiple={false}
-                            onDone={({base64})=>setPostData({...postData, selectedFile: base64 })}
-                            />
-                        </div> */}
                         <Button className={"buttonSubmit"} style={{marginBottom:'10px'}} variant="contained" color="success" type="submit" size="large" fullWidth>Login </Button>
-                        {/* <Button variant="contained" color="info" size="small" onClick={{}} style={{marginBottom:'10px'}} fullWidth> Clear </Button> */}
-                        <div className="align_right">
-                            {/* <FormHelperText>{"or proceed to public portal"} <a href="/public">here</a></FormHelperText> */}
-                        </div>
                     </form>
                 </Paper> 
             </div>
