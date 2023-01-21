@@ -18,6 +18,12 @@ export const SideNav = () => {
                 </div>
                 {/* <div className="nav_link">
                     <Button variant="contained" color="success" href="/staff/dashboard/account" fullWidth>Account</Button>
+                </div>
+                <div className="nav_link">
+                    <Button variant="contained" color="success" href="/staff/dashboard/account" fullWidth>Staff</Button>
+                </div>
+                <div className="nav_link">
+                    <Button variant="contained" color="success" href="/staff/dashboard/account" fullWidth>ICT</Button>
                 </div> */}
             </div>
         </div>

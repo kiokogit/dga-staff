@@ -50,12 +50,9 @@ const DashHome = () => {
                             <Card className="dash_cards"  onClick={e=> navigate('ingestion/packages/new')}>
                                 Add new Package
                             </Card>
-                            {/* <Card className="dash_cards"  onClick={e=> navigate('ingestion/packages/edit')}>
-                                Show all Packages
+                            <Card className="dash_cards"  onClick={e=> navigate('ingestion/packages/edit')}>
+                                View/Modify Packages
                             </Card>
-                            <Card className="dash_cards"  onClick={e=> navigate('ingestion/packages/delete')}>
-                                Remove Package
-                            </Card> */}
                         </Paper>
                         {/* <Paper className="paper margin_around">
                             <div className="flexrow">
