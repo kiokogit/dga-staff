@@ -321,49 +321,63 @@ export const ViewEditPacks = () =>{
             <Typography variant="h6">Packages List</Typography>
             <FormHelperText><small>Deletion is not reversible</small></FormHelperText>
             <Paper>
-            <Table>
+            <Table size="small">
                 <TableHead>
-                    <TableCell>Image</TableCell>
+                    <div className="hide_in_mini">
+                        <TableCell>Image</TableCell>
+                    </div>
                     <TableCell>Reference Number </TableCell>
                     <TableCell>Title</TableCell>
-                    <TableCell>Description</TableCell>
+                    <div  className="hide_in_mini">
+                        <TableCell  className="hide_in_mini ">Description</TableCell>
+                    </div>
                     <TableCell>Status  <TableSortLabel 
                         // active={true}
                         onClick={(e)=>handleSortStatus(e)}
                         direction={sort_dir ? "asc":"desc"}>
                             </TableSortLabel></TableCell>
-                    <TableCell>Actions</TableCell>
+                    <div className="hide_in_mini">
+                        <TableCell>Actions</TableCell>
+                    </div>
                 </TableHead>
                 <TableBody>
                 {packages.data.map(p=>
                     <TableRow hover={true}>
-                        <TableCell width={"50px"}>
-                            <img alt="" src={p.cover_image} style={{width:"50px", height:"50px"}} />
-                        </TableCell>
+                        <div className="hide_in_mini">
+                            <TableCell width={"50px"}  className="hide_in_mini ">
+                                <img alt="" src={p.cover_image} style={{width:"50px", height:"50px"}} />
+                            </TableCell>
+                        </div>
                         <TableCell>
                             {p.reference_number}
                         </TableCell>
                         <TableCell>
                             {p.title}
                         </TableCell>
-                        <TableCell>
-                            <>{p.description.slice(0, 70)}</>...
-                        </TableCell>
+                        <div className="hide_in_mini">
+                            <TableCell  className="hide_in_mini ">
+                                <>{p.description.slice(0, 70)}</>...
+                            </TableCell>
+                        </div>
                         <TableCell>
                             {p.is_active? "Active":"Inactive"}
-                            {p.is_active?  
-                                <Button variant="outlined" color="warning" onClick={e=>activateDeactivatePackage(p.package_id)}>Deactivate</Button>:
-                                <Button variant="contained" color="warning" onClick={e=>activateDeactivatePackage(p.package_id)}>Activate</Button>
-                            }
+                            <div>
+                                {p.is_active?  
+                                    <Button variant="outlined" color="warning" onClick={e=>activateDeactivatePackage(p.package_id)}>Deactivate</Button>:
+                                    <Button variant="contained" color="warning" onClick={e=>activateDeactivatePackage(p.package_id)}>Activate</Button>
+                                }
+                            </div>
                         </TableCell>
-                        <TableCell>
-                            <ButtonGroup size="small">
-                                <Button variant="contained" color="success" onClick={e=>handleOpenDetail(e, p, "view")}>View</Button>
-                                <Button variant="outlined" color="success" onClick={e=>handleOpenDetail(e, p, "edit")}><EditOutlined/></Button>
-                                
-                                <Button variant="contained" color="error" onClick={e=>removePackage(p.package_id)}><DeleteOutline /></Button>
-                            </ButtonGroup>
-                        </TableCell>
+                        <div className="hide_in_mini">
+                            <TableCell>
+                                <ButtonGroup size="small">
+                                    <Button variant="contained" color="success" onClick={e=>handleOpenDetail(e, p, "view")}>View</Button>
+                                    <Button variant="outlined" color="success" onClick={e=>handleOpenDetail(e, p, "edit")}><EditOutlined/></Button>
+                                    
+                                    <Button variant="contained" color="error" onClick={e=>removePackage(p.package_id)}><DeleteOutline /></Button>
+                                </ButtonGroup>
+                            </TableCell>
+                        </div>
                     </TableRow>
                     )}
                 </TableBody>

@@ -14,6 +14,12 @@
     }
     
 }
+@media (max-width:850px) {
+    .hide_in_mini{
+        display: none;
+    }
+    
+}
 
 .side_nav_staff {
     width:100%;
