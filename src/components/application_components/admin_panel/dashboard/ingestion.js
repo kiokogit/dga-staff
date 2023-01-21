@@ -1,5 +1,5 @@
-import { Button, ButtonGroup, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormHelperText, InputLabel, MenuItem, OutlinedInput, Paper, Select, Table, TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TextField, Typography } from "@mui/material"
-import { useEffect, useRef, useState } from "react"
+import { Box, Button, ButtonGroup, Card, Collapse, FormControl, FormHelperText, FormLabel, IconButton, ImageList, ImageListItem, ImageListItemBar, InputLabel, ListSubheader, MenuItem, OutlinedInput, Paper, Select, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, Typography } from "@mui/material"
+import { Fragment, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { CloseBtn } from "../../../sharable_components/small_components/buttons/buttons"
@@ -13,7 +13,7 @@ import { get_package_detail_view } from "../../../../actions/packages_actions"
 import './dash_staff.css'
 import { new_package_payload } from "./payloads"
 
-import { DeleteOutline, EditOutlined } from "@mui/icons-material"
+import { AddAPhotoOutlined, CancelOutlined, DeleteOutline, EditOutlined, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material"
 
 export const Ingestion = () => {
 
@@ -263,7 +263,6 @@ export const NewPackAdd = ({pack, mode}) => {
 
 export const ViewEditPacks = () =>{
     const [packages, setPackages] = useState({data:[], count:0})
-    const dispatch = useDispatch()
     const [page, set_page] = useState(0)
     const [action, set_action] = useState(0)
 
@@ -274,9 +273,61 @@ export const ViewEditPacks = () =>{
     const handleChangePage = (event, value) => {
 		window.scrollTo({top: document.getElementById("packages").offsetTop - 79, behavior:'smooth'})
 		set_page(value);
+        set_action(Math.random())
 	};
 
+
+    return (
+        <div className="margin_around" id="packages">
+            <Typography variant="h6">Packages List</Typography>
+            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+                <TableContainer sx={{ maxHeight: 800 }}>
+                    <Table stickyHeader aria-label="sticky table">
+                    <TableHead >
+                            <TableCell sx={{fontWeight:"bold"}}>Expand</TableCell>
+                        <TableCell sx={{fontWeight:"bold"}}>Title</TableCell>
+                        <TableCell sx={{fontWeight:"bold"}}>Destination</TableCell>
+                        <TableCell sx={{fontWeight:"bold"}}>Status</TableCell>
+                    </TableHead>
+                <TableBody>
+                {packages.data.map(p=><TableDetailedRow pack={p} set_action={set_action} action={action}/>
+                    )}
+                </TableBody>
+                <TableFooter>
+                    <TablePagination
+                     page={page} 
+                     rowsPerPage={packages.data.length} 
+                     rowsPerPageOptions={[packages.data.length]} 
+                     count={packages.count} 
+                     onPageChange={handleChangePage}/>
+                </TableFooter>
+            </Table>
+            </TableContainer>
+            </Paper>
+        </div>
+    )
+}
+
+function TableDetailedRow({pack, set_action, action}) {
+    const [open, setOpen] = useState(false)
+    const [p, set_p] = useState(pack)
+    const [edit, set_edit] = useState(false)
+
+    const dispatch = useDispatch()
+
+
+    useEffect(()=>{
+        if(open){
+            get_package_detail_view(pack.package_id).then(res=>set_p(res))
+        }
+    }, [open, action, pack.package_id])
+
+    
     const removePackage = (id) => {
+    }
+
+    const archivePackage = (id) => {
+
     }
 
     const activateDeactivatePackage = (id) => {
@@ -286,186 +337,159 @@ export const ViewEditPacks = () =>{
             .catch(e=>dispatch(post_short_alert_message({error:e.message})))
             .finally(()=>{
                 dispatch(set_loading(false, ""))
-                set_action(action+1)
+                set_action(Math.random())
             })
-
     }
 
-    // detail view
-    const [openDetail, setOpenDetail] = useState(false)
-	const [selected, setSelected] = useState({"title":""})
-
-    const handleCloseDetail = () => {
-        setOpenDetail(false)
-    }
-
-    const handleOpenDetail = (e, pack, mod) => {
-        e.preventDefault()
-        setSelected(pack)
-        setOpenDetail(true)
-        // set_mode(mod)
-    }
-
-    const [sort_dir, set_dir] = useState(true)
-    const handleSortStatus= (e) => {
-        let sortedpackages = packages.data.sort(
-            (p1, p2) => (p1.is_active) ? (sort_dir ? 1:-1) : (!p1.is_active) ? (sort_dir? -1:1) : 0);
-            setPackages({...packages, data:sortedpackages})
-            set_dir(!sort_dir)
-    }
-
-    // const [mode, set_mode] = useState("view")
 
     return (
-        <div className="margin_around" id="packages">
-            <Typography variant="h6">Packages List</Typography>
-            <FormHelperText><small>Deletion is not reversible</small></FormHelperText>
-            <Paper>
-            <Table size="small">
-                <TableHead>
-                    <div className="hide_in_mini">
-                        <TableCell>Image</TableCell>
-                    </div>
-                    <TableCell>Reference Number </TableCell>
-                    <TableCell>Title</TableCell>
-                    <div  className="hide_in_mini">
-                        <TableCell  className="hide_in_mini ">Description</TableCell>
-                    </div>
-                    <TableCell>Status  <TableSortLabel 
-                        // active={true}
-                        onClick={(e)=>handleSortStatus(e)}
-                        direction={sort_dir ? "asc":"desc"}>
-                            </TableSortLabel></TableCell>
-                    <div className="hide_in_mini">
-                        <TableCell>Actions</TableCell>
-                    </div>
-                </TableHead>
-                <TableBody>
-                {packages.data.map(p=>
-                    <TableRow hover={true}>
-                        <div className="hide_in_mini">
-                            <TableCell width={"50px"}  className="hide_in_mini ">
-                                <img alt="" src={p.cover_image} style={{width:"50px", height:"50px"}} />
-                            </TableCell>
-                        </div>
+        <Fragment>
+        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+            <TableCell>
+            <IconButton
+                aria-label="expand row"
+                size="small"
+                onClick={() => setOpen(!open)}
+            >
+                {open ? <KeyboardArrowUp /> : <KeyboardArrowDown/>}
+            </IconButton>
+            </TableCell>
                         <TableCell>
-                            {p.reference_number}
+                            {pack.title}
                         </TableCell>
                         <TableCell>
-                            {p.title}
+                            {pack.city_town}, {pack.country}
                         </TableCell>
-                        <div className="hide_in_mini">
-                            <TableCell  className="hide_in_mini ">
-                                <>{p.description.slice(0, 70)}</>...
-                            </TableCell>
-                        </div>
-                        <TableCell>
-                            {p.is_active? "Active":"Inactive"}
-                            <div>
-                                {p.is_active?  
-                                    <Button variant="outlined" color="warning" onClick={e=>activateDeactivatePackage(p.package_id)}>Deactivate</Button>:
-                                    <Button variant="contained" color="warning" onClick={e=>activateDeactivatePackage(p.package_id)}>Activate</Button>
+                        <TableCell sx={pack.is_active? {color:"green", fontWeight:"bold"}:{color:"red", fontWeight:"bold"}}>
+                            {pack.is_active? "Active":"Inactive"}
+                        </TableCell>
+      </TableRow>
+      <TableRow>
+      <TableCell style={{ paddingBottom: 0, paddingTop: 0 , width:"100%"}} colSpan={5}>
+        <Card >
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <div style={{width:"100%", minWidth:"300px", margin:"1%"}} className="flexrow wrap">
+                <div>
+                    <FormHelperText>GREEN ZONE: Enjoy the magic!</FormHelperText>
+                    <ButtonGroup>
+                        <Button variant="outlined" color="success" onClick={e=>set_edit(!edit)}>{!edit? <EditOutlined/>: <CancelOutlined />}{edit ? "Cancel Editing": "Edit"}</Button>
+                        {p.is_active?  
+                            <Button variant="outlined" color="warning" disabled={edit} onClick={e=>activateDeactivatePackage(p.package_id)}>Deactivate</Button>:
+                            <Button variant="contained" color="warning" disabled={edit} onClick={e=>activateDeactivatePackage(p.package_id)}>Activate</Button>
+                        }
+                    </ButtonGroup>
+                </div>
+                <div style={{paddingRight:"1rem"}}>
+                    <FormHelperText>RED ZONE: Go slow. Deletion is not reversible</FormHelperText>
+                    <ButtonGroup>
+                        <Button variant="outlined" color="error" disabled={edit} onClick={e=>archivePackage(p.package_id)}>Archive</Button>
+                        <Button variant="contained" color="error" disabled={edit} onClick={e=>removePackage(p.package_id)}><DeleteOutline/>Delete</Button>
+                    </ButtonGroup>
+                </div>
+
+            </div>
+            <Box sx={{ margin: 1 }} width={"100%"} className={"flexrow wrap"}>
+                <div style={{width:"47%", minWidth:"300px"}}>
+                    <FormControl fullWidth>
+                        <FormLabel>Title</FormLabel>
+                        <TextField value={p.title} variant="filled" inputProps={{readonly:true}} disabled={!edit} fullWidth/>
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <FormLabel>Description</FormLabel>
+                        <TextField value={p.description} variant="filled" inputProps={{readonly:true}} disabled={!edit} multiline={true} fullWidth/>
+                    </FormControl>
+                </div>
+                <div style={{width:"47%", minWidth:"300px"}}>
+                    <FormControl fullWidth>
+                        <FormControl fullWidth>
+                            <FormLabel>Destination (City/Town)</FormLabel>
+                            <TextField value={p.city_town} variant="filled" inputProps={{readonly:true}} disabled={!edit}/>
+                        </FormControl>
+                        <FormControl fullWidth>
+                            <FormLabel>Destination (Country)</FormLabel>
+                            <TextField value={p.country} variant="filled" inputProps={{readonly:true}} disabled={!edit}/>
+                        </FormControl>
+                    </FormControl>
+                </div>
+                <div style={{width:"47%", minWidth:"300px"}}>
+                    <ImageList sx={{ minWidth: 300, height: 450 }} variant="quilted">
+                        <ImageListItem key="Subheader" cols={2}>
+                            <div className="flexrow">
+                                <ListSubheader component="div">Package Gallery </ListSubheader>
+                                {edit && 
+                                <div>
+                                    {"Add Images"}
+                                    <AddAPhotoOutlined />
+                                </div>
                                 }
                             </div>
+                            <img 
+                                src={`${p.cover_image}?w=248&fit=crop&auto=format`}
+                                srcSet={p.cover_image}
+                                alt={"Cover"}
+                                loading="lazy"
+                                
+                            />
+                            <ImageListItemBar
+                                title={"Cover Image"}
+                            />
+                        </ImageListItem>
+                        {p.images?.map((item) => (
+                            <ImageListItem key={item.image}>
+                            <img
+                                src={`${item.image}?w=248&fit=crop&auto=format`}
+                                srcSet={`${item.image}`}
+                                alt={item.description}
+                                loading="lazy"
+                            />
+                            <ImageListItemBar
+                                title={item.description}
+                                actionIcon={
+                                    <DeleteOutline />
+                                }
+                            />
+                            </ImageListItem>
+                        ))}
+                        </ImageList>                    
+                </div>
+                <div style={{width:"47%", minWidth:"300px"}}>
+                    OTHER DETAILS
+                    <div>
+                        {edit && 
+                        <Button variant="contained" color="success">Submit Changes</Button>
+                        }
+                    </div>
+                </div>
+              
+                {/* <Table size="small" aria-label="details">
+                    <TableBody>
+                        <TableRow>
+                        <TableCell component="th" scope="row">
+                            <ButtonGroup size="small" fullWidth>
+                                {p.is_active?  
+                                    <Button variant="outlined" color="warning" onClick={e=>{}}>Deactivate</Button>:
+                                    <Button variant="contained" color="warning" onClick={e=>{}}>Activate</Button>
+                                }
+                                <Button variant="outlined" color="success" onClick={e=>{}}><EditOutlined/>Edit</Button>
+                            </ButtonGroup>
                         </TableCell>
-                        <div className="hide_in_mini">
-                            <TableCell>
-                                <ButtonGroup size="small">
-                                    <Button variant="contained" color="success" onClick={e=>handleOpenDetail(e, p, "view")}>View</Button>
-                                    <Button variant="outlined" color="success" onClick={e=>handleOpenDetail(e, p, "edit")}><EditOutlined/></Button>
-                                    
-                                    <Button variant="contained" color="error" onClick={e=>removePackage(p.package_id)}><DeleteOutline /></Button>
-                                </ButtonGroup>
-                            </TableCell>
-                        </div>
-                    </TableRow>
-                    )}
-                </TableBody>
-                <TableFooter>
-                    <TablePagination page={page} rowsPerPage={packages.data.length} rowsPerPageOptions={[packages.data.length]} count={packages.count} onPageChange={handleChangePage}/>
-                </TableFooter>
-            </Table>
-			<DetailViewDialog pack={selected} open={openDetail} handleClose={handleCloseDetail} />
-            </Paper>
-        </div>
+                        <TableCell>
+                            <ButtonGroup size="small" fullWidth>
+                                <Button variant="outlined" color="error" onClick={e=>{}}>Archive</Button>
+                                <Button variant="contained" color="error" onClick={e=>{}}><DeleteOutline/>Delete</Button>
+                            </ButtonGroup>
+                        </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+                </Grid>
+              </Grid> */}
+            </Box>
+          </Collapse>
+        </Card>
+      </TableCell>
+      </TableRow>
+      </Fragment>
     )
 }
 
-
-export function DetailViewDialog({pack, open, handleSubmitInquiry, handleClose, mode}) {
-    const descriptionElementRef = useRef(null);
-    const dispatch = useDispatch()
-    const [package_detail, setPackageDetail] = useState({})
-  
-    useEffect(() => {
-        if (open) {
-            get_package_detail_view(pack.package_id)
-              .then(res=>setPackageDetail(res))
-              .catch(e=>{
-                  dispatch(post_short_alert_message({error:e.message}))
-                  handleClose()
-              })
-              .finally(()=>{})
-        const { current: descriptionElement } = descriptionElementRef;
-        if (descriptionElement !== null) {
-          descriptionElement.focus();
-        }
-      } else{
-          setPackageDetail({})
-      }
-    }, [open, dispatch, pack]);
-  
-  
-    return (
-      <div>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          scroll={'paper'}
-          aria-labelledby="scroll-dialog-title"
-          aria-describedby="scroll-dialog-description"
-          fullWidth
-        >
-          <DialogTitle id="scroll-dialog-title">{package_detail.title}</DialogTitle>
-          
-          <DialogContent dividers={true}>
-            <CardMedia component={'img'} className="media_clear" loading="lazy" alt="" image={package_detail.cover_image} />
-            <DialogContentText
-              id="scroll-dialog-description"
-              ref={descriptionElementRef}
-              tabIndex={-1}
-            >
-              <CardContent>{package_detail.description}</CardContent>
-              {/* <NewPackAdd mode={mode} pack={{...editing_pack, package:package_detail, tags:package_detail.tags, images:package_detail.images, price:package_detail.cost}} /> */}
-            </DialogContentText>
-            {/* <h3> Gallery</h3>
-            <ImageList sx={{ width: 500, height: 450 }} variant="quilted">
-              <ImageListItem key="Subheader" cols={2}>
-                  <ListSubheader component="div">Possible sights</ListSubheader>
-              </ImageListItem>
-              {package_detail.images?.map((item) => (
-                  <ImageListItem key={item.image}>
-                  <img
-                      src={`${item.image}?w=248&fit=crop&auto=format`}
-                      srcSet={`${item.image}`}
-                      alt={item.description}
-                      loading="lazy"
-                  />
-                  <ImageListItemBar
-                      title={item.description}
-                  />
-                  </ImageListItem>
-              ))}
-              </ImageList> */}
-          </DialogContent>
-          <DialogActions>
-            <Button color="info" onClick={handleClose}>Close</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    );
-  }
-  
-  
-  
-  
