@@ -70,7 +70,7 @@ export const NewPackAdd = ({pack, mode}) => {
                 dispatch(post_short_alert_message({success:res.details}))
                 setNewpack(pack)
             })
-            .catch(e=>dispatch(post_short_alert_message({error:`Sorry, ${e.message}. Try again Later`})))
+            .catch(e=>dispatch(post_short_alert_message({error:`Sorry, Package Not Added. Try again Later`})))
             .finally(e=> {dispatch(set_loading(false, ''))})
     }
 
