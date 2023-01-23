@@ -18,9 +18,9 @@ export const new_package_payload = {
         "package_to": null,
         "no_of_days": null,
         "no_of_nights": null,
-        "event_name": "",
-        "event_from": null,
-        "event_to": null
+        // "event_name": "",
+        // "event_from": null,
+        // "event_to": null
     },
     "images": [],
     "price": [],

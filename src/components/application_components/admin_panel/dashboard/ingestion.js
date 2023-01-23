@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Card, Collapse, FormControl, FormHelperText, FormLabel, IconButton, ImageList, ImageListItem, ImageListItemBar, InputLabel, ListSubheader, MenuItem, OutlinedInput, Paper, Select, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, Typography } from "@mui/material"
+import { Box, Button, ButtonGroup, Card, Collapse, FilledInput, FormControl, FormHelperText, FormLabel, IconButton, ImageList, ImageListItem, ImageListItemBar, Input, InputLabel, ListSubheader, MenuItem, OutlinedInput, Paper, Select, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, Typography } from "@mui/material"
 import { Fragment, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { Route, Routes, useNavigate } from "react-router-dom"
@@ -14,6 +14,9 @@ import './dash_staff.css'
 import { new_package_payload } from "./payloads"
 
 import { AddAPhotoOutlined, CancelOutlined, DeleteOutline, EditOutlined, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material"
+import { get_countries_list } from "../../../../actions/shared_actions"
+import { CountrySelect } from "./countries_util"
+import { MinMaxDateRangePicker } from "./small_utils"
 
 export const Ingestion = () => {
 
@@ -59,10 +62,14 @@ export const NewPackAdd = ({pack, mode}) => {
     })
 
     const addpackage = (e) => {
+        window.scrollTo(0, 0)
         e.preventDefault()
         dispatch(set_loading(true, 'Processing...'))
         post_new_package(newpack)
-            .then(res=>dispatch(post_short_alert_message({success:res.details})))
+            .then(res=>{
+                dispatch(post_short_alert_message({success:res.details}))
+                setNewpack(pack)
+            })
             .catch(e=>dispatch(post_short_alert_message({error:`Sorry, ${e.message}. Try again Later`})))
             .finally(e=> {dispatch(set_loading(false, ''))})
     }
@@ -88,6 +95,15 @@ export const NewPackAdd = ({pack, mode}) => {
     const [all_prices, setAllPrices] = useState([])
 
 
+    // utils
+    const [countries, set_countries] = useState([])
+
+    useEffect(()=>{
+        get_countries_list().then(res=>set_countries(res.results))
+    }, [])
+
+
+
     return (
         <Paper className='paper margin_around paper_form view_only'>
             <form noValidate={false} onSubmit={e=>addpackage(e)} onReset={()=>setNewpack(pack)} id='pack_form' >
@@ -107,42 +123,40 @@ export const NewPackAdd = ({pack, mode}) => {
                     </h5> */}
                 </div>
                 <div className="textfield">
-                    <TextField required variant="outlined" size="small" label="Title" value={newpack.package.title} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, title:e.target.value}})} />
+                    <TextField required variant="outlined"  label="Title" value={newpack.package.title} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, title:e.target.value}})} />
                 </div>
-                <div>
                     Package Cover Image
-                    <div className={"fileInput textfield"}>
-                        <FileBase
+                <Button variant="outlined" color="success" size="large" fullWidth>
+                    <FileBase
                         type="file"
                         className={"fileInput"}
                         multiple={false}
                         onDone={({base64})=>setNewpack({...newpack, package:{...newpack.package, cover_image:base64}})}
                         />
-                    </div>                    
-                </div>
+                </Button>
                 <div className="textfield"> 
-                    <TextField required variant="outlined" size="small" label="Promo Description" multiline={true} rows={4} value={newpack.package.description} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, description:e.target.value}})} placeholder="Type captivating promo description..." />
+                    <TextField required variant="outlined"  label="Promo Description" multiline={true} rows={4} value={newpack.package.description} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, description:e.target.value}})} placeholder="Type captivating promo description..." />
+                </div>
+                <FormControl fullWidth>
+                    <CountrySelect countries={countries} setValue={val=>setNewpack({...newpack, package:{...newpack.package, country:val.name}})} />
+                </FormControl>
+                <div className="textfield space_fields">
+                    <TextField required variant="outlined"  label="Final Destination: City/Town" value={newpack.package.city_town} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, city_town:e.target.value}})} />
                 </div>
                 <div className="textfield space_fields">
-                    <TextField required variant="outlined" size="small" label="Final Destination: Country" value={newpack.package.country} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, country:e.target.value}})} />
+                    <TextField inputProps={{min: 0}} type={'number'} variant="outlined" label="No of Days" value={newpack.package.no_of_days} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package,no_of_days:Number(e.target.value)}})} placeholder="eg 3"/>
                 </div>
                 <div className="textfield space_fields">
-                    <TextField required variant="outlined" size="small" label="Final Destination: City/Town" value={newpack.package.city_town} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, city_town:e.target.value}})} />
+                    <TextField required={newpack.package.no_of_days} inputProps={{min: newpack.package.no_of_days-1, max:Number(newpack.package.no_of_days)+1}} disabled={!newpack.package.no_of_days} type={'number'} variant="outlined"  label="No of nights" value={newpack.package.no_of_nights} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package,no_of_nights:Number(e.target.value)}})} placeholder="eg, 2"/>
                 </div>
                 <div className="textfield space_fields">
-                    <TextField type={'number'} variant="outlined" size="small" label="No of Days" value={newpack.package.no_of_days} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package,no_of_days:e.target.value}})} placeholder="eg 3"/>
+                    <MinMaxDateRangePicker required={false} value={newpack.package.package_from} label={"Start Date"} setValue={value=>setNewpack({...newpack, package:{...newpack.package,package_from:value}})} />
                 </div>
                 <div className="textfield space_fields">
-                    <TextField type={'number'} variant="outlined" size="small" label="No of nights" value={newpack.package.no_of_nights} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package,no_of_nights:e.target.value}})} placeholder="eg, 2"/>
-                </div>
-                <div className="textfield space_fields">
-                    <TextField type={'date'} variant="outlined" size="small" label="From(Date)" value={newpack.package.package_from} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package,package_from:e.target.value}})} placeholder=""/>
-                </div>
-                <div className="textfield space_fields">
-                    <TextField type={'date'} variant="outlined" size="small" label="To(Date)" value={newpack.package.package_to} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package,package_to:e.target.value}})} placeholder=""/>
+                    <MinMaxDateRangePicker minDate={newpack.package.package_from} required={newpack.package.package_from} disabled={!newpack.package.package_from} value={newpack.package.package_to} label={"End Date"} setValue={value=>setNewpack({...newpack, package:{...newpack.package,package_to:value}})} />
                 </div>
                 <div className="textfield">
-                    <TextField required variant="outlined" size="small" multiline={true} rows={4} label="Itinerary" value={newpack.package.package_particulars} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, package_particulars:e.target.value}})} />
+                    <TextField required variant="outlined"  multiline={true} rows={4} label="Itinerary" value={newpack.package.package_particulars} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, package_particulars:e.target.value}})} />
                 </div>
                 <>Prices</>
                 {newpack.price?.map(p=>
@@ -165,7 +179,7 @@ export const NewPackAdd = ({pack, mode}) => {
                                 onChange={e=>setPrice({...price, type:e.target.value})}
                                 fullWidth
                                 variant="standard"
-                                size="small"
+                                
                                 >
                                     <MenuItem value={"PER PERSON PER DAY"}>Price Per Person Per Day</MenuItem>
                                     <MenuItem value={"PER PERSON PER TOUR"}>Price Per Person Whole Trip</MenuItem>
@@ -174,7 +188,7 @@ export const NewPackAdd = ({pack, mode}) => {
                                 </Select>
                         </FormControl>
                     <div className="textfield">
-                            <TextField variant="outlined" size="small" label="Amount" type='number' value={price.amount} fullWidth onChange={e=>setPrice({...price, amount:e.target.value})} />
+                            <TextField variant="outlined"  label="Amount" type='number' value={price.amount} fullWidth onChange={e=>setPrice({...price, amount:e.target.value})} />
                     </div>
                     <Button
                     disabled={(!price.amount || !price.type)}
@@ -188,7 +202,7 @@ export const NewPackAdd = ({pack, mode}) => {
                     >Add</Button>
                 </Paper>
                 <div className="textfield">
-                    <TextField variant="outlined" size="small" required multiline={true} rows={4} label="Price includes" value={newpack.package.requirements} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, requirements:e.target.value}})} />
+                    <TextField variant="outlined"  required multiline={true} rows={4} label="Price includes" value={newpack.package.requirements} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, requirements:e.target.value}})} />
                 </div>
                 <div className="textfield">
                     <FormControl fullWidth>
@@ -239,9 +253,9 @@ export const NewPackAdd = ({pack, mode}) => {
                         />
                     </div>
                     <div className="textfield">
-                        <TextField variant="outlined" size="small" label="Image Description" value={addImg.name} fullWidth onChange={e=>setAddImg({...addImg, description:e.target.value})} />
+                        <TextField variant="outlined"  label="Image Description" value={addImg.description} fullWidth onChange={e=>setAddImg({...addImg, description:e.target.value})} />
                     </div>
-                    <Button variant="outlined" color="success" size="small" value={"Add Image"} onClick={e=>{
+                    <Button variant="outlined" color="success"  value={"Add Image"} onClick={e=>{
                         e.preventDefault()
                         if(addImg.image!=="" || addImg.name!==""){
                             setNewpack({...newpack, images:[...newpack.images, addImg]})

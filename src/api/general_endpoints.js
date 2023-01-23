@@ -10,3 +10,7 @@ export const search_packages = (search_value, page) => API.get(`/packages/views/
 export const get_package_details = (package_id) => API.get(`/packages/views/package_detail_view?package_id=${package_id}`)
 
 export const get_packages_counts_url = (tags, page) => API.get(`/packages/views/package_by_tags?filter=${tags}&&page=${page}`)
+
+
+export const get_countries_list_api = () => API.get(`/utils/countries/get_countries_data`)
+
