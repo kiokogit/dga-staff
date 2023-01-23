@@ -153,7 +153,7 @@ export const NewPackAdd = ({pack, mode}) => {
                     <MinMaxDateRangePicker required={false} value={newpack.package.package_from} label={"Start Date"} setValue={value=>setNewpack({...newpack, package:{...newpack.package,package_from:value}})} />
                 </div>
                 <div className="textfield space_fields">
-                    <MinMaxDateRangePicker minDate={newpack.package.package_from} required={newpack.package.package_from} disabled={!newpack.package.package_from} value={newpack.package.package_to} label={"End Date"} setValue={value=>setNewpack({...newpack, package:{...newpack.package,package_to:value}})} />
+                    <MinMaxDateRangePicker minDate={newpack.package.package_from} required={newpack.package.package_from? true:false} disabled={!newpack.package.package_from} value={newpack.package.package_to} label={"End Date"} setValue={value=>setNewpack({...newpack, package:{...newpack.package,package_to:value}})} />
                 </div>
                 <div className="textfield">
                     <TextField required variant="outlined"  multiline={true} rows={4} label="Itinerary" value={newpack.package.package_particulars} fullWidth onChange={e=>setNewpack({...newpack, package:{...newpack.package, package_particulars:e.target.value}})} />
