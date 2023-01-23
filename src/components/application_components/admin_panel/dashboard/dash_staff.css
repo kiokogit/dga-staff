@@ -86,3 +86,9 @@
     justify-content: space-between;
     padding: 15px;
 }
+
+
+.wrap {
+    flex-wrap: wrap;
+    gap: 10px;
+}

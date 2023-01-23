@@ -3,7 +3,7 @@
     max-width:500px;
     min-width: 200px;
     min-height: 1.5rem;
-    padding: 5px;
+    padding: 1rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -13,19 +13,19 @@
     font-weight: bold;
     text-align: left;
     position: absolute;
-    top: 20px;
+    top: 100px;
     right: 3px;
     z-index: 1000;
-    border-radius: 5px;
+    /* border-radius: 5px; */
 }
 
 .success {
-    background-color: rgb(184, 217, 184);
+    background-color: rgb(255, 255, 255);
     color: rgb(9, 97, 9);
 }
 
 .error {
-    background-color: rgb(240, 197, 197);
+    background-color: rgb(255, 255, 255);
     color: red;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .alert_bar {
-    animation: shake 3s cubic-bezier(.36,.07,.19,.97) both;
+    /* animation: shake 3s cubic-bezier(.36,.07,.19,.97) both; */
     transform: translate3d(0, 0, 0);
 }
 
